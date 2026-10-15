@@ -351,3 +351,71 @@ menu = st.sidebar.radio(
     ]
 )
 
+
+import statsmodels.api as sm
+
+st.header("📉 Analisis Regresi OLS")
+
+# Memilih variabel yang tersedia
+kandidat_y = ["IPM", "KEMISKINAN", "PENGANGGURAN"]
+kandidat_x = ["PAD", "DAU_Grant", "DBH_PAJAK"]
+
+y_tersedia = [c for c in kandidat_y if c in data.columns]
+x_tersedia = [c for c in kandidat_x if c in data.columns]
+
+if y_tersedia and x_tersedia:
+    y_col = st.selectbox(
+        "Variabel dependen (Y)",
+        y_tersedia
+    )
+
+    x_cols = st.multiselect(
+        "Variabel independen (X)",
+        [c for c in x_tersedia if c != y_col],
+        default=[c for c in x_tersedia if c != y_col]
+    )
+
+    if x_cols:
+        regresi = data[[y_col] + x_cols].copy()
+
+        for col in regresi.columns:
+            regresi[col] = pd.to_numeric(
+                regresi[col], errors="coerce"
+            )
+
+        regresi = regresi.dropna()
+
+        if len(regresi) > len(x_cols) + 1:
+            Y = regresi[y_col]
+            X = sm.add_constant(regresi[x_cols])
+
+            model = sm.OLS(Y, X).fit()
+
+            st.subheader("Hasil Estimasi")
+
+            a, b, c = st.columns(3)
+            a.metric("Jumlah Observasi", len(regresi))
+            b.metric("R-squared", f"{model.rsquared:.4f}")
+            c.metric("Prob (F-statistic)", f"{model.f_pvalue:.4f}")
+
+            st.text(model.summary().as_text())
+
+            hasil_koef = pd.DataFrame({
+                "Variabel": model.params.index,
+                "Koefisien": model.params.values,
+                "P-value": model.pvalues.values
+            })
+
+            st.dataframe(
+                hasil_koef,
+                use_container_width=True
+            )
+        else:
+            st.warning(
+                "Jumlah data valid belum cukup untuk regresi."
+            )
+else:
+    st.warning(
+        "Kolom untuk regresi belum tersedia. "
+        "Periksa nama variabel dalam dataset."
+    )
