@@ -7,6 +7,8 @@ Original file is located at
     https://colab.research.google.com/drive/1Cu0tDZOMQXef7p17342coWa4rdt_ep_e
 """
 
+pip install streamlit plotly statsmodels
+
 import streamlit as st
 import pandas as pd
 import plotly.express as px
