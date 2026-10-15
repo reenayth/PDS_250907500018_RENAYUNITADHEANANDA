@@ -15,8 +15,8 @@ import plotly.express as px
 # 1. KONFIGURASI DASHBOARD
 # =====================================
 st.set_page_config(
-    page_title="Dashboard Data Fiskal",
-    page_icon="📊",
+    page_title="Dashboard Data Fiskal Punya Rena ",
+    page_icon="💖",
     layout="wide"
 )
 
