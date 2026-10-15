@@ -336,3 +336,18 @@ with tab4:
 
 st.divider()
 st.caption("Dashboard Data Fiskal Daerah | Sumber: Dataset GitHub DATAAKSI")
+
+
+st.sidebar.title("📊 Dashboard Fiskal")
+menu = st.sidebar.radio(
+    "Pilih Menu",
+    [
+        "Beranda",
+        "Data Fiskal",
+        "Analisis Tren",
+        "Perbandingan Kota",
+        "Regresi OLS",
+        "Tentang Dashboard"
+    ]
+)
+
