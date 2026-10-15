@@ -419,3 +419,45 @@ else:
         "Kolom untuk regresi belum tersedia. "
         "Periksa nama variabel dalam dataset."
     )
+
+
+st.header("🏙️ Perbandingan Antar Kota")
+
+if "Kota" in data.columns:
+    numerik = data.select_dtypes(
+        include="number"
+    ).columns.tolist()
+
+    numerik = [c for c in numerik if c != "Tahun"]
+
+    if numerik:
+        indikator = st.selectbox(
+            "Pilih indikator untuk dibandingkan",
+            numerik,
+            key="perbandingan"
+        )
+
+        ringkasan = (
+            data.groupby("Kota", as_index=False)[indikator]
+            .mean()
+            .sort_values(indikator, ascending=False)
+        )
+
+        fig = px.bar(
+            ringkasan,
+            x="Kota",
+            y=indikator,
+            color=indikator,
+            title=f"Perbandingan {indikator} Antar Kota"
+        )
+
+        st.plotly_chart(
+            fig,
+            use_container_width=True
+        )
+
+        st.dataframe(
+            ringkasan,
+            use_container_width=True,
+            hide_index=True
+        )
