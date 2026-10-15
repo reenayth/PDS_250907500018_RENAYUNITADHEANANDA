@@ -15,7 +15,7 @@ import plotly.express as px
 # 1. KONFIGURASI DASHBOARD
 # =====================================
 st.set_page_config(
-    page_title="Dashboard Data Fiskal Punya Rena ",
+    page_title="Dashboard Data Fiskal",
     page_icon="💖",
     layout="wide"
 )
@@ -53,7 +53,7 @@ except Exception as e:
 # =====================================
 # 3. JUDUL DASHBOARD
 # =====================================
-st.title("📊 Dashboard Data Fiskal Daerah")
+st.title("💖 Dashboard Data Fiskal Daerah Milik Rena")
 st.write(
     "Visualisasi data penerimaan fiskal, belanja pemerintah, "
     "dan indikator sosial ekonomi berdasarkan kota dan tahun."
